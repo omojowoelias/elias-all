@@ -1,0 +1,22 @@
+<script defer src="main.js"></script>
+<div>
+ <h3>Sign our petition to make the wearing of <a href="">Crocs</a> in public places a criminal act in every jurisdiction</h2>
+ <p><img src=""></p>
+     </p>
+     <div>
+    {{#if warning}}
+    <p class="text-petition warning">Please fill in all details</p>
+    {{/if}}
+    <div>
+<form action="/petition" id="formSign" method="POST">
+  <label for="fname">First name:</label>
+  <input type="text" id="fname" name="fname"><br><br>
+  <label for="lname">Last name:</label>
+  <input type="text" id="lname" name="lname"><br><br>
+  <input style="display: none;" name="signature" id="hidden">
+  <button>submit</button>
+</form>
+
+ <canvas id="canvas" width="200" height="100"></canvas>
+</div>
+
