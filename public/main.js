@@ -42,7 +42,7 @@ function mousemove(canvas, evt) {
     }
 }
 
-// ON MOUSE UP
+//ON MOUSE UP
 function mouseup() {
     isMouseDown = false;
     let data = canvas.toDataURL();

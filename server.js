@@ -27,6 +27,9 @@ app.get("/petition", (req, res) => {
 app.get("/thanks", (req, res) => {
     res.render("thanks", {
         layouts: "main",
+        getSignature();
+
+        
     });
 });
 
@@ -48,11 +51,6 @@ app.get("/Login", (req, res) => {
     });
 });
 
-/*app.post("/petition", (req, res) = {
-let email = req.body.email,
-let passwd = req.body.password;
-});
-*/
 app.post("/petition", (req, res) => {
     let firstName = req.body.fname;
     let lastName = req.body.lname;
@@ -79,4 +77,4 @@ app.post("/petition", (req, res) => {
        // });
     }
 });
-app.listen(8083, console.log("App is running on port 8083"));
+app.listen(8088, console.log("App is running on port 8088"));
