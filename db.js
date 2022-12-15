@@ -20,4 +20,12 @@ module.exports.addSignature = (firstName, lastName, signature) => {
     )
 };
 
+// Function to INSERT users
+module.exports.addUsers = (firstNname, lastNname, email, passwd) => {
+    return db.query(
+        `INSERT INTO users (firstname, lastname, email, passwd) VALUES ($1, $2, $3 $4) RETURNING * `,
+        [firstNname, lastNname, email, passwd],
+    );
+};
+`INSERT INTO users () VALUES (), RETURNING *`;
 //

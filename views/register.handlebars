@@ -1,17 +1,20 @@
 the page is registration page
 <p>
 A wors without CROCS is within reach but we won't get here without your support </p>
-<form action="/users" id="formSign" method="POST">
+<form action="/register" id="formSign" method="POST">
   <label for="fname">First name:</label>
   <input type="text" id="fname" name="fname"><br><br>
   <label for="lname">Last name:</label>
   <input type="text" id="lname" name="lname"><br><br>
   <label for="lname">Email Address:</label>
-  <input type="text" id="email" name="email"><br><br>
+  <input type="text" id="emailAddr" name="email"><br><br>
   <label for="lname">Password:</label>
-  <input type="text" id="paswd" name="password"><br><br>
+  <input type="text" id="passwd" name="password"><br><br>
   <input style="display: none;" name="signature" id="hidden">
   <button>SIGNUP</button>
 </form>
-<p>If you are already a member pleace log in.</p>
+<p>If you are already a member please log in.</p>
 </div>
+{{#if display}}
+<p>Error on page</p>
+{{/if}}
