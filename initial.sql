@@ -1,13 +1,6 @@
 DROP TABLE IF EXISTS signatures;
-
-CREATE TABLE signatures (
-    id SERIAL primary key,
-    firstname VARCHAR(255) NOT NULL,
-    lastname VARCHAR(255) NOT NULL,
-    signature VARCHAR NOT NULL,
-    created_at TIMESTAMP DEFAULT current_timestamp
-); 
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS user_profiles;
+DROP TABLE IF EXISTS users CASCADE;
 
 
 CREATE TABLE users(
@@ -18,3 +11,21 @@ CREATE TABLE users(
     password VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE signatures (
+    id SERIAL primary key,
+    user_id INT REFERENCES users,
+    signature VARCHAR NOT NULL,
+    created_at TIMESTAMP DEFAULT current_timestamp
+);
+
+CREATE TABLE user_profiles (
+    id SERIAL primary key,
+    city VARCHAR(255) NOT NULL,
+    age VARCHAR(255) NOT NULL,
+    homepage VARCHAR(255) NOT NULL,
+    user_id INT REFERENCES users,
+    created_at TIMESTAMP DEFAULT current_timestamp
+);
+
+

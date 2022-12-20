@@ -11,21 +11,53 @@ module.exports.getSignature = () => {
 };
 
 // Function to INSERT signatures
-module.exports.addSignature = (firstName, lastName, signature) => {
+module.exports.addSignature = (signature, userid) => {
    return db.query(
-        `INSERT INTO signatures (firstname, lastname, signature) VALUES ($1, $2, $3) RETURNING * `,
-        [firstName,
-        lastName,
-        signature]
+        `INSERT INTO signatures (signature, user_id) VALUES ($1, $2) RETURNING * `,
+        [signature,
+        userid]
     )
 };
 
 // Function to INSERT users
-module.exports.addUsers = (firstNname, lastNname, email, passwd) => {
+module.exports.addUsers = (firstNname, lastNname, email, password) => {
     return db.query(
-        `INSERT INTO users (firstname, lastname, email, passwd) VALUES ($1, $2, $3 $4) RETURNING * `,
-        [firstNname, lastNname, email, passwd],
+        `INSERT INTO users (firstname, lastname, email, password) VALUES ($1, $2, $3, $4) RETURNING * `,
+        [firstNname, lastNname, email, password]
     );
 };
-`INSERT INTO users () VALUES (), RETURNING *`;
-//
+
+// Function to INSERT users_profile
+
+module.exports.addUsers_profile = (age, city, homepage, userid) => {
+    return db.query(
+        `INSERT INTO user_profiles (age, city, homepage, user_id) VALUES ($1, $2, $3, $4) RETURNING * `,
+        [age, city, homepage, userid]
+    );
+};
+
+//Function to get FULL JOIN of both tables
+module.exports.getTables = () => {
+    return db.query(`
+        SELECT users.id, users.firstname, users.lastname, users.email, user_PROFILES.city, user_PROFILES.age, user_PROFILES.homepage, signatures.signature 
+        FROM users
+        JOIN signatures ON users.id = signatures.user_id
+        FULL OUTER JOIN user_profiles
+        ON users.id = user_PROFILES.user_id`)
+};
+
+//Function to UPDATE AND INSERT data
+//module.exports.update = (firstname, lastname, email) => {
+    //return db.query(``)
+//}
+// Function to get signers
+module.exports.getCity = (city) => {
+    return db.query(`
+        SELECT users.id, users.firstname, users.lastname, users.email, user_PROFILES.city, user_PROFILES.age, user_PROFILES.homepage, signatures.signature  
+        FROM users
+        JOIN signatures ON users.id = signatures.user_id
+        FULL OUTER JOIN user_profiles
+        ON users.id = user_PROFILES.user_id
+        where city = $1`, [city] );
+    }
+

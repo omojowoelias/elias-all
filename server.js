@@ -1,10 +1,18 @@
 const express = require("express");
 const app = express();
-const { getSignature, addSignature } = require("./db.js");
+const {
+    getSignature,
+    addSignature,
+    addUsers,
+    addUsers_profile,
+    getTables,
+    getCity,
+} = require("./db.js");
+
 const cookieSession = require("cookie-session");
-const { hashPass, compare} = require("./encrypt");
+const { hashPass, compare } = require("./encrypt");
 let warning = false;
-//let signatureId;
+//let signature;
 //const cookieParser = require("cookie-parse");
 
 //app.use(cookieParser());
@@ -29,6 +37,7 @@ app.use(express.urlencoded({ extended: false }));
 //app.use(express.static());
 
 app.get("/petition", (req, res) => {
+    console.log(req.session.userid);
     res.render("petition", {
         layouts: "main",
         warning: false,
@@ -36,17 +45,20 @@ app.get("/petition", (req, res) => {
 });
 
 app.get("/thanks", (req, res) => {
-    getSignature()
+    getTables()
         .then((data) => {
-            console.log(data.rows);
+            console.log(data.rows.length);
             console.log(req.session.signatureId);
-            const signatureRow = data.rows.find(row  => {
-            return   row.id === req.session.signatureId;
-            })
-            imgUrl = signatureRow.signature;
+            const userData = data.rows.find((row) => {
+                return row.id === req.session.userid;
+            });
+
+            imgUrl = userData.signature;
+
             res.render("thanks", {
                 layouts: "main",
                 imgUrl,
+                total: data.rows.length,
             });
         })
         .catch((error) => {
@@ -55,9 +67,18 @@ app.get("/thanks", (req, res) => {
 });
 
 app.get("/signers", (req, res) => {
-    res.render("signers", {
-        layouts: "main",
-    });
+    console.log(req.session.userid);
+    getTables()
+        .then((data) => {
+            console.log(data);
+            res.render("signers", {
+                layouts: "main",
+                signers: data.rows,
+            });
+        })
+        .catch((error) => {
+            console.log(`error found`, error);
+        });
 });
 
 app.get("/register", (req, res) => {
@@ -66,20 +87,60 @@ app.get("/register", (req, res) => {
     });
 });
 
+app.get("/profile", (req, res) => {
+    res.render("profile", {
+        layouts: "main",
+    });
+});
+
+app.post("/profile", (req, res) => {
+    let age = req.body.age;
+    let city = req.body.city;
+    let homepage = req.body.homepage;
+    const resultpg = { age, city, homepage };
+    console.log(resultpg);
+    const userid = req.session.userid;
+    console.log(userid);
+    addUsers_profile(age, city, homepage, userid).then((resultpg) => {
+        console.log(resultpg);
+        res.redirect("/petition");
+    });
+    //req.session.userid = resultpg.rows[0].id;
+});
+
 app.post("/register", (req, res) => {
     let firstNname = req.body.fname;
     let lastNname = req.body.lname;
     let email = req.body.email;
     let password = req.body.password;
-     const result = { firstNname, lastNname, email, password };
-     console.log(result);
+    const result = { firstNname, lastNname, email, password };
+    console.log(result);
     hashPass(password).then((hashedPassword) => {
         console.log(hashedPassword);
+        if (
+            firstNname !== "" &&
+            lastNname !== "" &&
+            email !== "" &&
+            !!password
+        ) {
+            addUsers(firstNname, lastNname, email, hashedPassword)
+                .then((result) => {
+                    console.log(result);
+                    req.session.userid = result.rows[0].id;
+                    res.redirect("/profile/");
+                })
+                .catch((err) => {
+                    console.log(`error found`, err);
+                });
+        }
     });
-     res.render("register", {
-        diplay: true,
-     } );
 });
+
+// app.get("/profile", (req, res) => {
+//     res.render("profile", {
+//         layouts: main,
+//     })
+// })
 
 app.get("/login", (req, res) => {
     res.render("login", {
@@ -88,19 +149,17 @@ app.get("/login", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-le
-})
+    le;
+});
 
 app.post("/petition", (req, res) => {
-    let firstName = req.body.fname;
-    let lastName = req.body.lname;
     let signature = req.body.signature;
     //let passwd = req.body.password;
-    const data = { firstName, lastName, signature };
+    const data = { signature };
     console.log(data);
-
-    if (firstName !== "" && lastName !== "" && signature) {
-        addSignature(firstName, lastName, signature)
+    const userid = req.session.userid;
+    if (!!signature) {
+        addSignature(signature, userid)
             .then((data) => {
                 console.log(data);
                 warning === false;
@@ -117,4 +176,36 @@ app.post("/petition", (req, res) => {
         });
     }
 });
+
+app.get("/signers/:useCity", (req, res) => {
+    const city = req.params.useCity;
+    const data = getCity(city).then((data) => {
+        console.log(req.params.useCity);
+        console.log(data);
+        res.render("signerspagebycity", {
+            layouts: "main",
+            signers: data.rows,
+            city: req.params.useCity
+        });
+    });
+});
+app.get("profile/edit", (req, res) => {
+    res.render("edit", {
+        layouts: "main",
+
+    })
+})
+app.post("profile/edit", (req, res) => {
+    let firstname = req.body.fname;
+    let lastname = req.body.lname;
+    let email = req.body.email;
+    let passwd = req.body.password;
+    let age = req.body.age;
+    let city = req.body.city;
+    let homepage = req.body.homepage;
+    const newData = { firstname, lastname, email, passwd, age, city, homepage };
+    console.log (newData);
+});
+
+app.get("/edit", (req, res) => {});
 app.listen(8088, console.log("App is running on port 8088"));

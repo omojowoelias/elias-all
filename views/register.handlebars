@@ -1,19 +1,21 @@
-the page is registration page
-<p>
-A wors without CROCS is within reach but we won't get here without your support </p>
+  <img src="/Images/imges.jpeg" id="img" width="100%" height="100%">
 <form action="/register" id="formSign" method="POST">
+<div class="page">
+<h3 class="menu">Child abuse and neglect are serious public health problems and adverse childhood experiences (ACEs). 
+  They can have long-term impacts on health, opportunity, and wellbeing. This issue includes 
+  all types of abuse and neglect of a child under the age of 18 by a parent, caregiver.
+</h3>
   <label for="fname">First name:</label>
-  <input type="text" id="fname" name="fname"><br><br>
+  <input type="text" id="fname" name="fname" required><br><br>
   <label for="lname">Last name:</label>
-  <input type="text" id="lname" name="lname"><br><br>
-  <label for="lname">Email Address:</label>
-  <input type="text" id="emailAddr" name="email"><br><br>
+  <input type="text" id="lname" name="lname" required><br><br>
+  <label for="lname">Email Add:</label>
+  <input type="text" id="emailAddr" name="email" required><br><br>
   <label for="lname">Password:</label>
-  <input type="text" id="passwd" name="password"><br><br>
-  <input style="display: none;" name="signature" id="hidden">
-  <button>SIGNUP</button>
+  <input type="text" id="passwd" name="password" required><br><br>
+  <button class="btn1">SIGNUP</button>
+  </div>
 </form>
-<p>If you are already a member please log in.</p>
 </div>
 {{#if display}}
 <p>Error on page</p>
