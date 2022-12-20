@@ -7,6 +7,9 @@ const {
     addUsers_profile,
     getTables,
     getCity,
+    getUserbyId,
+    updateUserbyId,
+    updateUserProfilesbyId
 } = require("./db.js");
 
 const cookieSession = require("cookie-session");
@@ -189,13 +192,20 @@ app.get("/signers/:useCity", (req, res) => {
         });
     });
 });
-app.get("profile/edit", (req, res) => {
-    res.render("edit", {
-        layouts: "main",
 
-    })
-})
-app.post("profile/edit", (req, res) => {
+
+app.get("/edit", (req, res) => {
+    getUserbyId(req.session.userid)
+    .then((data) => {
+        console.log(data.rows);
+        res.render("edit", {
+            layouts: "main",
+            user: data.rows[0],
+        });
+    });
+});
+
+app.post("/edit", (req, res) => {
     let firstname = req.body.fname;
     let lastname = req.body.lname;
     let email = req.body.email;
@@ -205,7 +215,22 @@ app.post("profile/edit", (req, res) => {
     let homepage = req.body.homepage;
     const newData = { firstname, lastname, email, passwd, age, city, homepage };
     console.log (newData);
+     const userid = req.session.userid;
+    updateUserbyId(userid, firstname, lastname, email)
+        .then((date) => {
+            console.log(data);
+        })
+        .catch((error) => {
+            console.log(`Error found`, error);
+        });
+    updateUserProfilesbyId(userid, age, city, homepage)
+    .then((data) => {
+        console.log(data);
+    })
+    res.redirect("/thanks")
 });
 
-app.get("/edit", (req, res) => {});
+
+
+
 app.listen(8088, console.log("App is running on port 8088"));
