@@ -39,6 +39,9 @@ app.use(express.static((__dirname, "./public")));
 app.use(express.urlencoded({ extended: false }));
 //app.use(express.static());
 
+app.get("/", (req, res) => {
+    res.redirect("/register");
+});
 app.get("/petition", (req, res) => {
     console.log(req.session.userid);
     res.render("petition", {
