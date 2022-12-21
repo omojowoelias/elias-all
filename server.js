@@ -230,12 +230,11 @@ app.post("/edit", (req, res) => {
     res.redirect("/thanks");
 });
 
-app.get("/logout", (req, res) => {
+
+app.post("/logout", (req, res) => {
     req.session.userid = null;
     res.redirect("/register");
-
 });
-
 app.listen(
     process.env.PORT || 8080,
     console.log("App is running on port 8080")
