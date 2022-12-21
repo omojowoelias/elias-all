@@ -129,3 +129,9 @@ h3{
   font-weight: bold;
   color: white;
 }
+.logOutBtn {
+     width: 25%;
+    height: 15%;
+    margin-top: 5vw;
+    margin-left: 20vw;
+}
