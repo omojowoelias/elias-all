@@ -9,7 +9,7 @@ const {
     getCity,
     getUserbyId,
     updateUserbyId,
-    updateUserProfilesbyId
+    updateUserProfilesbyId,
 } = require("./db.js");
 
 const cookieSession = require("cookie-session");
@@ -188,15 +188,13 @@ app.get("/signers/:useCity", (req, res) => {
         res.render("signerspagebycity", {
             layouts: "main",
             signers: data.rows,
-            city: req.params.useCity
+            city: req.params.useCity,
         });
     });
 });
 
-
 app.get("/edit", (req, res) => {
-    getUserbyId(req.session.userid)
-    .then((data) => {
+    getUserbyId(req.session.userid).then((data) => {
         console.log(data.rows);
         res.render("edit", {
             layouts: "main",
@@ -214,8 +212,8 @@ app.post("/edit", (req, res) => {
     let city = req.body.city;
     let homepage = req.body.homepage;
     const newData = { firstname, lastname, email, passwd, age, city, homepage };
-    console.log (newData);
-     const userid = req.session.userid;
+    console.log(newData);
+    const userid = req.session.userid;
     updateUserbyId(userid, firstname, lastname, email)
         .then((date) => {
             console.log(data);
@@ -223,14 +221,13 @@ app.post("/edit", (req, res) => {
         .catch((error) => {
             console.log(`Error found`, error);
         });
-    updateUserProfilesbyId(userid, age, city, homepage)
-    .then((data) => {
+    updateUserProfilesbyId(userid, age, city, homepage).then((data) => {
         console.log(data);
-    })
-    res.redirect("/thanks")
+    });
+    res.redirect("/thanks");
 });
 
-
-
-
-app.listen(8088, console.log("App is running on port 8088"));
+app.listen(
+    process.env.PORT || 8080,
+    console.log("App is running on port 8080")
+);

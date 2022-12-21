@@ -1,33 +1,43 @@
 #canvas {
   cursor: crosshair;
   border: 1px solid black;
-   margin-left: 40vw;
+   margin-left: 10vw;
    margin-top: 5vw;
+   background-color: white;
 }
 .btn {
-    width: 8vw;
+    width: 10vw;
     height: 2vw;
     margin-left: 45vw;
 }
 .btn1{
-    width: 6vw;
-    height: 2vw;
+    width: 25%;
+    height: 15%;
     margin-top: 5vw;
-    margin-left: 4vw;
+    margin-left: 20vw;
+}
+.btn2{
+    width: 25%;
+    height: 15%;
+    margin-top: 5vw;
+    margin-left: 10vw;
+}
+
+.btn3{
+    width: 15%;
 }
 body {
     background-color: steelblue;
+    /*background-image: url('Images/abuse.jpg');
+    background-repeat: no-repeat;
+    width: 60%;
+    height: 60%;*/
 }
 *{
     margin: 0;
     padding: 0;
 }
-.menu {
-    font-family: cursive;
-    font-weight: bold;
-    
-    
-}
+
 #form {
     padding-left: 3vw;
     padding-right: 3vw;
@@ -41,13 +51,17 @@ body {
     background-size: cover;
 }
 h3{
-    color: #020202;
+    color: white;
+    padding-bottom: 10vw;
+    padding-top: 10vw;
 }
 .page{
   position: absolute;
   top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
+  font-family: cursive;
+  font-weight: bold;
 }
 #form{
     padding-top: 4vw;
@@ -55,7 +69,45 @@ h3{
 .signimg {
     width: 50px;
 }
-.box{
-    padding-left: 10vw;
-    
+
+#form{
+    padding-top: 4vw;
+}
+.signimg {
+    width: 50px;
+}
+.petit {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: cursive;
+  font-weight: bold;
+  padding-top: 10vw;
+}
+.edit {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: cursive;
+  font-weight: bold;
+}
+.profil {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: cursive;
+  font-weight: bold;
+  color: white;
+}
+.signrs {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: cursive;
+  font-weight: bold;
+  color: white;
 }
